@@ -33,16 +33,23 @@ def get_problem_statement(data):
     data = data.replace('$','')
     return data
 
-# Change this according to the requirement from https://codeforces.com/apiHelp
-api_link = 'https://codeforces.com/api/problemset.problems?tags=fft'
+tag = input('Enter the (VALID) tag to get problems:')
+api_link = 'https://codeforces.com/api/problemset.problems?tags={}'.format(tag)
 problem_links = generate_problem_links(api_link)
 
-print('All the links of problems :')
-for link in problem_links:
-    print(link)
+# print('Total problems = {}'.format(len(problem_links)))
+# print('All the links of problems :')
+# for link in problem_links:
+#     print(link)
+print('Total problems = {}'.format(len(problem_links)))
+
+# exit(0)
 
 lens = []
+cnt = 1
 for link in problem_links:
+    print('Working on problem no : {}'.format(cnt))
+    cnt += 1
     data = get_text_from_link(link)
     data = get_problem_statement(data)
     lens.append((len(data), link))
@@ -50,4 +57,4 @@ for link in problem_links:
 lens.sort()
 
 for x in lens:
-    print(x[0], x[1])
+    print('Length of statement = {} , link = {}'.format(x[0], x[1]))
